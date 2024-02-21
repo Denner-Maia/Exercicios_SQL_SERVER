@@ -1,6 +1,6 @@
 
 /*
-EXERCÕCIO 1
+EXERC√çCIO 1
 Restaurar o arquivo  treino.bak no banco de dados criado.
 */
 
@@ -14,7 +14,7 @@ MOVE 'TREINO_log' TO 'C:\SQL\Bases\Logs\TREINO_RESTORE_Log.ldf'
 GO
 
 /*
-EXERCÕCIO 2 
+EXERC√çCIO 2 
 Liste todos os clientes com seus nomes e com suas respectivas cidade e estados
 */
 
@@ -28,15 +28,15 @@ INNER JOIN CIDADE
 GO
   
 /*
-EXERCÕCIO 3 
-Liste o cÛdigo do produto, descriÁ„o do produto e descriÁ„o das categorias dos produtos que tenham o valor unit·rio na 
+EXERC√çCIO 3 
+Liste o c√≥digo do produto, descri√ß√£o do produto e descri√ß√£o das categorias dos produtos que tenham o valor unit√°rio na 
 faixa de R$ 10,00 a R$ 1500
 */
 
 SELECT 
 	 PRODUTOS.ID_PROD
-	,PRODUTOS.NOME_PRODUTO AS 'DESCRI«√O DO PRODUTO'
-	,CATEGORIA.NOME_CATEGORIA AS 'DESCRI«√O DA CATEGORIA'
+	,PRODUTOS.NOME_PRODUTO AS 'DESCRI√á√ÉO DO PRODUTO'
+	,CATEGORIA.NOME_CATEGORIA AS 'DESCRI√á√ÉO DA CATEGORIA'
 	,PRODUTOS.PRECO
 FROM PRODUTOS 
 INNER JOIN CATEGORIA 
@@ -46,26 +46,26 @@ WHERE
 GO
 
 /*
-EXERCÕCIO 4 
-Liste o cÛdigo do produto, descriÁ„o do produto e descriÁ„o da categorias dos produtos, e tambÈm apresente uma coluna condicional  com o  nome de "faixa de preÁo" 
-Com os seguintes critÈrios
-ï	preÁo< 500 : valor da coluna ser·  igual  "preÁo abaixo de 500"
-ï	preÁo  >= 500 e <=1000 valor da coluna ser· igual  "preÁo entre 500 e 1000"
-ï	preÁo  > 1000 : valor da coluna ser· igual  "preÁo acima de 1000".
+EXERC√çCIO 4 
+Liste o c√≥digo do produto, descri√ß√£o do produto e descri√ß√£o da categorias dos produtos, e tamb√©m apresente uma coluna condicional  com o  nome de "faixa de pre√ßo" 
+Com os seguintes crit√©rios
+‚Ä¢	pre√ßo< 500 : valor da coluna ser√°  igual  "pre√ßo abaixo de 500"
+‚Ä¢	pre√ßo  >= 500 e <=1000 valor da coluna ser√° igual  "pre√ßo entre 500 e 1000"
+‚Ä¢	pre√ßo  > 1000 : valor da coluna ser√° igual  "pre√ßo acima de 1000".
 */
 
 SELECT 
 	 PRODUTOS.ID_PROD
-	,PRODUTOS.NOME_PRODUTO AS 'DESCRI«√O DO PRODUTO'
-	,CATEGORIA.NOME_CATEGORIA AS 'DESCRI«√O DA CATEGORIA'
+	,PRODUTOS.NOME_PRODUTO AS 'DESCRI√á√ÉO DO PRODUTO'
+	,CATEGORIA.NOME_CATEGORIA AS 'DESCRI√á√ÉO DA CATEGORIA'
 	,PRODUTOS.PRECO
 	,CASE WHEN PRODUTOS.PRECO < 500
-			THEN 'PRE«O ABAIXO DE 500'
+			THEN 'PRE√áO ABAIXO DE 500'
 		  WHEN PRODUTOS.PRECO >= 500 AND PRODUTOS.PRECO <= 1000
-			THEN 'PRE«O ENTRE 500 E 1000'
+			THEN 'PRE√áO ENTRE 500 E 1000'
 		  ELSE  
-				 'PRE«O ACIMA DE 1000'
-	 END AS 'FAIXA DE PRE«O'
+				 'PRE√áO ACIMA DE 1000'
+	 END AS 'FAIXA DE PRE√áO'
 FROM PRODUTOS 
 INNER JOIN CATEGORIA 
 	ON (PRODUTOS.ID_CATEGORIA = CATEGORIA.ID_CATEGORIA)
@@ -73,7 +73,7 @@ GO
 
 
 /*
-EXERCÕCIO  5
+EXERC√çCIO  5
 Adicione a coluna faixa_salario na tabela vendedor tipo char(1)
 */
 	select * from vendedores 
@@ -84,12 +84,12 @@ Adicione a coluna faixa_salario na tabela vendedor tipo char(1)
 	--ROLLBACK
 
 /*
-EXERCÕCIO 6 
+EXERC√çCIO 6 
 Atualize o valor do campo faixa_salario da tabela vendedor com um update condicional .
-Com os seguintes critÈrios
-ï	salario <1000 ,atualizar faixa = c
-ï	salario >=1000  and <2000 , atualizar faixa = b
-ï	salario >=2000  , atualizar faixa = a
+Com os seguintes crit√©rios
+‚Ä¢	salario <1000 ,atualizar faixa = c
+‚Ä¢	salario >=1000  and <2000 , atualizar faixa = b
+‚Ä¢	salario >=2000  , atualizar faixa = a
 
 **VERIFIQUE SE OS VALORES FORAM ATUALIZADOS CORRETAMENTE
 */
@@ -120,33 +120,33 @@ GO
 --ROLLBACK
 
 /*
-EXERCÕCIO 7
-Listar em ordem alfabÈtica os vendedores e seus respectivos sal·rios, mais uma coluna, simulando aumento de 12% em seus sal·rios.
+EXERC√çCIO 7
+Listar em ordem alfab√©tica os vendedores e seus respectivos sal√°rios, mais uma coluna, simulando aumento de 12% em seus sal√°rios.
 */
 
 SELECT 
 	VENDEDORES.NOME_VENDEDOR AS VENDEDOR
 	,VENDEDORES.SALARIO
-	,VENDEDORES.SALARIO * 1.12 AS 'SIMULA«√O DE AUMENTO DE 12%'
+	,VENDEDORES.SALARIO * 1.12 AS 'SIMULA√á√ÉO DE AUMENTO DE 12%'
 FROM VENDEDORES 
 GO
 
-/*EXERCÕCIO 8
-Listar os nome dos vendedores, sal·rio atual , coluna calculada com salario novo + reajuste de 18% sobre o sal·rio atual, calcular  a coluna acrÈscimo e calcula uma coluna salario novo+ acresc.
-CritÈrios
-Se o vendedor for  da faixa ìCî, aplicar  R$ 120 de acrÈscimo , outras faixas de salario acrÈscimo igual a 0(Zero )
+/*EXERC√çCIO 8
+Listar os nome dos vendedores, sal√°rio atual , coluna calculada com salario novo + reajuste de 18% sobre o sal√°rio atual, calcular  a coluna acr√©scimo e calcula uma coluna salario novo+ acresc.
+Crit√©rios
+Se o vendedor for  da faixa ‚ÄúC‚Äù, aplicar  R$ 120 de acr√©scimo , outras faixas de salario acr√©scimo igual a 0(Zero )
 */
 
 SELECT 
 	VENDEDORES.NOME_VENDEDOR AS VENDEDOR
-	,VENDEDORES.SALARIO AS 'SAL¡RIO ATUAL'
+	,VENDEDORES.SALARIO AS 'SAL√ÅRIO ATUAL'
 	,VENDEDORES.SALARIO * 1.18 AS 'SALARIO NOVO COM REAJUSTE DE 18%'
 	,VENDEDORES.FAIXA_SALARIO
 	,CASE WHEN VENDEDORES.FAIXA_SALARIO = 'C'
 			THEN '+ R$ 120'
 	 ELSE 
 		  '+ R$ 0.00'
-	 END AS 'ACR…SCIMO' 
+	 END AS 'ACR√âSCIMO' 
 	,CASE WHEN VENDEDORES.FAIXA_SALARIO = 'C'
 			THEN (VENDEDORES.SALARIO * 1.18) + 120
 	 ELSE 
@@ -156,8 +156,8 @@ FROM VENDEDORES
 GO
 
 /*
-EXERCÕCIO 9
-Listar o nome e sal·rios do vendedor com menor salario.
+EXERC√çCIO 9
+Listar o nome e sal√°rios do vendedor com menor salario.
 */
 
 SELECT
@@ -168,8 +168,8 @@ FROM VENDEDORES
 GO
 
 /*
-EXERCÕCIO 10
-Quantos vendedores ganham acima de R$ 2.000,00 de sal·rio fixo?
+EXERC√çCIO 10
+Quantos vendedores ganham acima de R$ 2.000,00 de sal√°rio fixo?
 */
 
 --select * from vendedores
@@ -180,10 +180,9 @@ FROM VENDEDORES
 WHERE VENDEDORES.SALARIO > 2000
 GO
 /*
-EXERCÕCIO 11
+EXERC√çCIO 11
 Adicione o campo valor_total tipo decimal(10,2) na tabela venda.
 */
-select * from vendas 
 BEGIN TRAN 
 ALTER TABLE VENDAs ADD VALOR_TOTAL DECIMAL(10,2)
 GO
@@ -192,7 +191,7 @@ GO
 --rollback
 
 /*
-EXERCÕCIO 12
+EXERC√çCIO 12
 Atualize o campo valor_tota da tabela venda, com a soma dos produtos das respectivas vendas.
 */
 begin tran
@@ -200,40 +199,43 @@ update vendas
 set valor_total = 
 (
 select 
-sum(val_total) 
+	sum(val_total) 
 from venda_itens
-where venda_itens.num_venda = vendas.num_venda 
+where (venda_itens.num_venda = vendas.num_venda) 
 group by num_venda
 )
+go
 --commit
 --rollback
 
 
 select 
-sum(val_total) 
+	sum(val_total) 
 from venda_itens
 group by num_venda
 go
 
 
 /*
-EXERCÕCIO 13
-Realize a conferencia do exercÌcio anterior, certifique-se que o valor  total de cada venda e igual ao valor total da soma dos  produtos da venda, listar as vendas em que ocorrer diferenÁa.
+EXERC√çCIO 13
+Realize a conferencia do exerc√≠cio anterior, certifique-se que o valor  total de cada venda e igual ao valor total da soma dos  produtos da venda, listar as vendas em que ocorrer diferen√ßa.
 */
 
 select
-num_venda,
-sum(val_total) 
+	num_venda,
+	sum(val_total) 
 from venda_itens
-where not exists(
-select num_venda, valor_total from vendas
-)
+where not exists
+	(select 
+		num_venda
+		,valor_total 
+	from vendas)
 group by num_venda
 go
 
 /*
-EXERCÕCIO 14
-Listar o n˙mero de produtos existentes, valor total , mÈdia do valor unit·rio referente ao mÍs 07/2018 agrupado por venda.
+EXERC√çCIO 14
+Listar o n√∫mero de produtos existentes, valor total , m√©dia do valor unit√°rio referente ao m√™s 07/2018 agrupado por venda.
 */
 
 SELECT
@@ -250,8 +252,8 @@ where datepart(yy,vendas.DATA_VENDA) = 2017
  GROUP BY VENDA_ITENS.NUM_VENDA
  go 
 /*
-EXERCÕCIO 15
-Listar o n˙mero de vendas, Valor do ticket mÈdio, menor ticket e maior ticket referente ao mÍs 07/2017.
+EXERC√çCIO 15
+Listar o n√∫mero de vendas, Valor do ticket m√©dio, menor ticket e maior ticket referente ao m√™s 07/2017.
 */
 
 SELECT 
@@ -271,7 +273,7 @@ WHERE DATEPART(YY,VENDAS.DATA_VENDA) = 2017
 
 
 /*
-EXERCÕCIO 16
+EXERC√çCIO 16
 Atualize o status das notas abaixo de normal(N) para cancelada (C)
 --15,34,80,104,130,159,180,240,350,420,422,450,480,510,530,560,600,640,670,714
 
@@ -289,14 +291,14 @@ GO
 
 
 /*
-EXERCÕCIO 17
+EXERC√çCIO 17
 Quais clientes realizaram mais de 70 compras?
 */
 
 SELECT
-VENDAS.ID_CLIENTE AS 'ID CLIENTE'
-,CLIENTE.NOME_CLIENTE AS 'CLIENTE'
-,COUNT(VENDAS.NUM_VENDA) 'QTD DE VENDAS'
+	 VENDAS.ID_CLIENTE AS 'ID CLIENTE'
+	,CLIENTE.NOME_CLIENTE AS 'CLIENTE'
+	,COUNT(VENDAS.NUM_VENDA) 'QTD DE VENDAS'
 FROM VENDAS
 INNER JOIN CLIENTE
 	ON VENDAS.ID_CLIENTE = CLIENTE.ID_CLIENTE
@@ -304,25 +306,23 @@ GROUP BY VENDAS.ID_CLIENTE, CLIENTE.NOME_CLIENTE
 HAVING COUNT(NUM_VENDA) > 70
 
 /*
-EXERCÕCIO 18
-Listar os produtos que est„o incluÌdos em vendas que a quantidade total de produtos seja superior a 100 unidades.
+EXERC√çCIO 18
+Listar os produtos que est√£o inclu√≠dos em vendas que a quantidade total de produtos seja superior a 100 unidades.
 */
-
-
 
 WITH CTE_RELATORIO AS
 (
 SELECT 
-VENDA_ITENS.NUM_VENDA
-,PRODUTOS.NOME_PRODUTO
-,VENDA_ITENS.QTDE
+	 VENDA_ITENS.NUM_VENDA
+	,PRODUTOS.NOME_PRODUTO
+	,VENDA_ITENS.QTDE
 FROM VENDA_ITENS
 INNER JOIN PRODUTOS 
 	ON VENDA_ITENS.ID_PROD = PRODUTOS.ID_PROD
 ),
 CTE_RELATORIO2 AS (
 SELECT
-	NUM_VENDA
+	 NUM_VENDA
 	,NOME_PRODUTO
 	,QTDE
 	,SUM(QTDE) OVER(PARTITION BY NUM_VENDA) AS SUM_QTD
@@ -330,7 +330,7 @@ FROM CTE_RELATORIO
 )
 
 SELECT  
-	ISNULL(CAST(NUM_VENDA AS VARCHAR(50)),'TOTAL GERAL') AS 'NUMERO DA VENDA'
+	 ISNULL(CAST(NUM_VENDA AS VARCHAR(50)),'TOTAL GERAL') AS 'NUMERO DA VENDA'
 	,ISNULL(NOME_PRODUTO, 'TOTAL') AS PRODUTOS
 	,SUM(QTDE) AS 'SOMATORIO DE PRODUTOS' 
 	--,SUM_QTD
@@ -340,7 +340,7 @@ GROUP BY ROLLUP (NUM_VENDA,NOME_PRODUTO)
 GO
 
 /*
-EXERCÕCIO 19
+EXERC√çCIO 19
 Trazer total de vendas do ano 2017 por categoria e apresentar total geral
 */
 
@@ -359,13 +359,13 @@ GROUP BY ROLLUP(CATEGORIA.NOME_CATEGORIA)
 GO
 
 /*
-EXERCÕCIO 20
-Listar total de vendas do ano 2017 por categoria e mÍs a mÍs apresentar subtotal dos meses e total geral ano.
+EXERC√çCIO 20
+Listar total de vendas do ano 2017 por categoria e m√™s a m√™s apresentar subtotal dos meses e total geral ano.
 */
 
 SELECT
 	 ISNULL(CATEGORIA.NOME_CATEGORIA, 'TOTAL GERAL ANUAL') AS CATEGORIA 
-	,isnull(ISNULL(CAST(DATEPART(MM,VENDAS.DATA_VENDA) AS VARCHAR(50)), 'Total mensal ' + CATEGORIA.NOME_CATEGORIA),'TOTAL-ANO') AS 'M S'
+	,isnull(ISNULL(CAST(DATEPART(MM,VENDAS.DATA_VENDA) AS VARCHAR(50)), 'Total mensal ' + CATEGORIA.NOME_CATEGORIA),'TOTAL-ANO') AS 'M√äS'
 	,SUM(VAL_TOTAL) AS TOTAL
 FROM VENDA_ITENS
 INNER JOIN VENDAS 
@@ -379,13 +379,13 @@ GROUP BY ROLLUP(CATEGORIA.NOME_CATEGORIA, DATEPART(MM,VENDAS.DATA_VENDA))
 GO
 
 /*
-EXERCÕCIO 21
-Listar total de vendas por vendedores referente ao ano 2017, mÍs a mÍs apresentar subtotal do mÍs e total geral.
+EXERC√çCIO 21
+Listar total de vendas por vendedores referente ao ano 2017, m√™s a m√™s apresentar subtotal do m√™s e total geral.
 */
 
 SELECT
 	 ISNULL(VENDEDORES.NOME_VENDEDOR, 'TOTAL GERAL ANUAL') AS VENDEDORES 
-	,isnull(ISNULL(CAST(DATEPART(MM,VENDAS.DATA_VENDA) AS VARCHAR(50)), 'Total mensal ' + VENDEDORES.NOME_VENDEDOR), 'TOTAL-ANO') AS 'M S'
+	,isnull(ISNULL(CAST(DATEPART(MM,VENDAS.DATA_VENDA) AS VARCHAR(50)), 'Total mensal ' + VENDEDORES.NOME_VENDEDOR), 'TOTAL-ANO') AS 'M√äS'
 	,SUM(VENDAS.VALOR_TOTAL) AS TOTAL
 FROM VENDAS
 INNER JOIN VENDEDORES
@@ -395,15 +395,15 @@ GROUP BY ROLLUP(VENDEDORES.NOME_VENDEDOR, DATEPART(MM,VENDAS.DATA_VENDA))
 go
 
 /*
-EXERCÕCIO 22
+EXERC√çCIO 22
 Listar os top 10 produtos mais vendidos por valor total de venda com suas respectivas categorias
 */
 WITH CTE_RELATORIO AS 
 (
 SELECT 
- VENDA_ITENS.ID_PROD
-,SUM(VENDA_ITENS.VAL_TOTAL) AS 'VALOR TOTAL POR PRODUTO'
-,ROW_NUMBER() OVER(ORDER BY SUM(VENDA_ITENS.VAL_TOTAL) DESC) RANK
+	 VENDA_ITENS.ID_PROD
+	,SUM(VENDA_ITENS.VAL_TOTAL) AS 'VALOR TOTAL POR PRODUTO'
+	,ROW_NUMBER() OVER(ORDER BY SUM(VENDA_ITENS.VAL_TOTAL) DESC) RANK
 FROM VENDA_ITENS
 GROUP BY VENDA_ITENS.ID_PROD
 )
@@ -421,26 +421,25 @@ WHERE RANK <= 10
 ORDER BY CTE_RELATORIO.[VALOR TOTAL POR PRODUTO] DESC 
 go
 /*
-EXERCÕCIO 23
-Listar os top 10 produtos mais vendidos por valor total de venda com suas respectivas categorias, calcular seu percentual de participaÁ„o com relaÁ„o ao total geral.
+EXERC√çCIO 23
+Listar os top 10 produtos mais vendidos por valor total de venda com suas respectivas categorias, calcular seu percentual de participa√ß√£o com rela√ß√£o ao total geral.
 */
 
 WITH CTE_RELATORIO AS 
 (
 SELECT 
- VENDA_ITENS.ID_PROD
-,SUM(VENDA_ITENS.VAL_TOTAL) AS 'VALOR TOTAL POR PRODUTO'
-,ROW_NUMBER() OVER(ORDER BY SUM(VENDA_ITENS.VAL_TOTAL) DESC) RANK
+	 VENDA_ITENS.ID_PROD
+	,SUM(VENDA_ITENS.VAL_TOTAL) AS 'VALOR TOTAL POR PRODUTO'
+	,ROW_NUMBER() OVER(ORDER BY SUM(VENDA_ITENS.VAL_TOTAL) DESC) RANK
 FROM VENDA_ITENS
 GROUP BY VENDA_ITENS.ID_PROD
 )
---% = (parte ˜ todo) x 100
 SELECT 
 	 PRODUTOS.NOME_PRODUTO
 	,CATEGORIA.NOME_CATEGORIA
 	,CTE_RELATORIO.[VALOR TOTAL POR PRODUTO]
 	,RANK
-	,concat(cast((CTE_RELATORIO.[VALOR TOTAL POR PRODUTO] / (select sum(CTE_RELATORIO.[VALOR TOTAL POR PRODUTO]) from CTE_RELATORIO)) * 100 as decimal(10,2)), '%') as 'Porcentagem em relaÁao ao valor total'
+	,concat(cast((CTE_RELATORIO.[VALOR TOTAL POR PRODUTO] / (select sum(CTE_RELATORIO.[VALOR TOTAL POR PRODUTO]) from CTE_RELATORIO)) * 100 as decimal(10,2)), '%') as 'Porcentagem em rela√ßao ao valor total'
 FROM CTE_RELATORIO
 INNER JOIN PRODUTOS 
 	ON(CTE_RELATORIO.ID_PROD = PRODUTOS.ID_PROD)
@@ -451,14 +450,14 @@ ORDER BY CTE_RELATORIO.[VALOR TOTAL POR PRODUTO] DESC
 go
 
 /*
-EXERCÕCIO 24
-Listar apenas o produto mais vendido de cada MÍs com seu  valor total referente ao ano de 2017.
+EXERC√çCIO 24
+Listar apenas o produto mais vendido de cada M√™s com seu  valor total referente ao ano de 2017.
 */
 with cte_relatorio as 
 (
 select
 	 VENDA_ITENS.ID_PROD 
-	,datepart(mm,vendas.DATA_VENDA) as mÍs
+	,datepart(mm,vendas.DATA_VENDA) as m√™s
 	,sum(VENDA_ITENS.VAL_TOTAL) as total
 	,row_number() over(partition by datepart(mm,vendas.DATA_VENDA) order by sum(VENDA_ITENS.VAL_TOTAL) desc) as rank
 from VENDA_ITENS 
@@ -470,7 +469,7 @@ group by VENDA_ITENS.ID_PROD,datepart(mm,vendas.DATA_VENDA)
 
 select 
 	 produtos.NOME_PRODUTO
-	,cte_relatorio.mÍs
+	,cte_relatorio.m√™s
 	,cte_relatorio.total
 	--,cte_relatorio.rank
 from cte_relatorio 
@@ -479,8 +478,8 @@ inner join produtos
 where rank = 1
 go
 /*
-EXERCÕCIO 25
-Lista o cliente e a data da ˙ltima compra de cada cliente.
+EXERC√çCIO 25
+Lista o cliente e a data da √∫ltima compra de cada cliente.
 */
 
 select
@@ -493,8 +492,8 @@ where vendas.DATA_VENDA = (select max(vendas.DATA_VENDA) from vendas where venda
 go
 
 /*
-EXERCÕCIO 26
-Lista e a data da ˙ltima venda de cada produto.
+EXERC√çCIO 26
+Lista e a data da √∫ltima venda de cada produto.
 */
 
 select
