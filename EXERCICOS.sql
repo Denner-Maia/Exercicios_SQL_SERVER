@@ -382,7 +382,6 @@ GO
 EXERCÍCIO 21
 Listar total de vendas por vendedores referente ao ano 2017, mês a mês apresentar subtotal do mês e total geral.
 */
-
 SELECT
 	 ISNULL(VENDEDORES.NOME_VENDEDOR, 'TOTAL GERAL ANUAL') AS VENDEDORES 
 	,isnull(ISNULL(CAST(DATEPART(MM,VENDAS.DATA_VENDA) AS VARCHAR(50)), 'Total mensal ' + VENDEDORES.NOME_VENDEDOR), 'TOTAL-ANO') AS 'MÊS'
@@ -425,30 +424,34 @@ EXERCÍCIO 23
 Listar os top 10 produtos mais vendidos por valor total de venda com suas respectivas categorias, calcular seu percentual de participação com relação ao total geral.
 */
 
-WITH CTE_RELATORIO AS 
+select
+	RankProdutosVendidos.categoria,
+	RankProdutosVendidos.produto,
+	RankProdutosVendidos.total,
+	cast((RankProdutosVendidos.total / (select sum(val_total) from VENDA_ITENS)) * 100 as decimal(10,2)) as 'porcentagem em relaçao ao total geral',
+	RankProdutosVendidos.rank
+from
 (
-SELECT 
-	 VENDA_ITENS.ID_PROD
-	,SUM(VENDA_ITENS.VAL_TOTAL) AS 'VALOR TOTAL POR PRODUTO'
-	,ROW_NUMBER() OVER(ORDER BY SUM(VENDA_ITENS.VAL_TOTAL) DESC) RANK
-FROM VENDA_ITENS
-GROUP BY VENDA_ITENS.ID_PROD
-)
-SELECT 
-	 PRODUTOS.NOME_PRODUTO
-	,CATEGORIA.NOME_CATEGORIA
-	,CTE_RELATORIO.[VALOR TOTAL POR PRODUTO]
-	,RANK
-	,concat(cast((CTE_RELATORIO.[VALOR TOTAL POR PRODUTO] / (select sum(CTE_RELATORIO.[VALOR TOTAL POR PRODUTO]) from CTE_RELATORIO)) * 100 as decimal(10,2)), '%') as 'Porcentagem em relaçao ao valor total'
-FROM CTE_RELATORIO
-INNER JOIN PRODUTOS 
-	ON(CTE_RELATORIO.ID_PROD = PRODUTOS.ID_PROD)
-INNER JOIN CATEGORIA
-	ON(PRODUTOS.ID_CATEGORIA = CATEGORIA.ID_CATEGORIA)
-WHERE RANK <= 10
-ORDER BY CTE_RELATORIO.[VALOR TOTAL POR PRODUTO] DESC
-go
-
+select 
+	 produtos.ID_PROD
+	 ,CATEGORIA.NOME_CATEGORIA as categoria
+	,produtos.NOME_PRODUTO as produto
+	,sum(VENDA_ITENS.VAL_TOTAL) as total
+	,row_number()over(order by sum(VENDA_ITENS.VAL_TOTAL)  desc) as rank
+from produtos
+inner join CATEGORIA
+	on(PRODUTOS.ID_CATEGORIA = CATEGORIA.ID_CATEGORIA)
+inner join VENDA_ITENS
+	on(produtos.ID_PROD = VENDA_ITENS.ID_PROD)
+inner join vendas 
+	on(VENDA_ITENS.NUM_VENDA = vendas.NUM_VENDA)
+group by 
+	produtos.ID_PROD,
+	CATEGORIA.NOME_CATEGORIA,
+	produtos.NOME_PRODUTO
+) as RankProdutosVendidos
+where rank <= 10
+	
 /*
 EXERCÍCIO 24
 Listar apenas o produto mais vendido de cada Mês com seu  valor total referente ao ano de 2017.
