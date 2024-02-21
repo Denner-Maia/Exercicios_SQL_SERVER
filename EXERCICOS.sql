@@ -453,29 +453,34 @@ go
 EXERCÍCIO 24
 Listar apenas o produto mais vendido de cada Mês com seu  valor total referente ao ano de 2017.
 */
-with cte_relatorio as 
-(
-select
-	 VENDA_ITENS.ID_PROD 
-	,datepart(mm,vendas.DATA_VENDA) as mês
-	,sum(VENDA_ITENS.VAL_TOTAL) as total
-	,row_number() over(partition by datepart(mm,vendas.DATA_VENDA) order by sum(VENDA_ITENS.VAL_TOTAL) desc) as rank
-from VENDA_ITENS 
-inner join vendas 
-	on (VENDA_ITENS.NUM_VENDA = vendas.NUM_VENDA)
-where DATEPART(yy,vendas.DATA_VENDA) = 2017
-group by VENDA_ITENS.ID_PROD,datepart(mm,vendas.DATA_VENDA)
-)
-
 select 
-	 produtos.NOME_PRODUTO
-	,cte_relatorio.mês
-	,cte_relatorio.total
-	--,cte_relatorio.rank
-from cte_relatorio 
-inner join produtos
-	on(cte_relatorio.ID_PROD = PRODUTOS.ID_PROD)
-where rank = 1
+	RankItensVendidos2017.ID_PROD,
+	RankItensVendidos2017.produto,
+	RankItensVendidos2017.mes,
+	RankItensVendidos2017.total
+from 
+(
+select 
+	 produtos.ID_PROD
+	,produtos.NOME_PRODUTO as produto
+	,datepart(mm,vendas.DATA_VENDA) as mes
+	,sum(VALOR_TOTAL) as total
+	,row_number()over(partition by datepart(mm,vendas.DATA_VENDA) order by sum(VALOR_TOTAL) desc) as rank
+from produtos 
+inner join VENDA_ITENS
+	on(produtos.ID_PROD = VENDA_ITENS.ID_PROD)
+inner join vendas 
+	on(VENDA_ITENS.NUM_VENDA = vendas.NUM_VENDA)
+where 
+	datepart(yy,vendas.data_venda) = 2017
+group by 
+	produtos.ID_PROD,produtos.NOME_PRODUTO,
+	datepart(mm,vendas.DATA_VENDA)
+) as RankItensVendidos2017 
+where 
+	RankItensVendidos2017.rank = 1 
+order by 
+	RankItensVendidos2017.mes
 go
 /*
 EXERCÍCIO 25
