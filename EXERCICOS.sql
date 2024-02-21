@@ -397,28 +397,32 @@ go
 EXERCÍCIO 22
 Listar os top 10 produtos mais vendidos por valor total de venda com suas respectivas categorias
 */
-WITH CTE_RELATORIO AS 
+select
+	RankProdutosVendidos.categoria,
+	RankProdutosVendidos.produto,
+	RankProdutosVendidos.total,
+	RankProdutosVendidos.rank
+from
 (
-SELECT 
-	 VENDA_ITENS.ID_PROD
-	,SUM(VENDA_ITENS.VAL_TOTAL) AS 'VALOR TOTAL POR PRODUTO'
-	,ROW_NUMBER() OVER(ORDER BY SUM(VENDA_ITENS.VAL_TOTAL) DESC) RANK
-FROM VENDA_ITENS
-GROUP BY VENDA_ITENS.ID_PROD
-)
-SELECT 
-	 PRODUTOS.NOME_PRODUTO
-	,CATEGORIA.NOME_CATEGORIA
-	,CTE_RELATORIO.[VALOR TOTAL POR PRODUTO]
-	,RANK
-FROM CTE_RELATORIO
-INNER JOIN PRODUTOS 
-	ON(CTE_RELATORIO.ID_PROD = PRODUTOS.ID_PROD)
-INNER JOIN CATEGORIA
-	ON(PRODUTOS.ID_CATEGORIA = CATEGORIA.ID_CATEGORIA)
-WHERE RANK <= 10
-ORDER BY CTE_RELATORIO.[VALOR TOTAL POR PRODUTO] DESC 
-go
+select 
+	 produtos.ID_PROD
+	 ,CATEGORIA.NOME_CATEGORIA as categoria
+	,produtos.NOME_PRODUTO as produto
+	,sum(VENDA_ITENS.VAL_TOTAL) as total
+	,row_number()over(order by sum(VENDA_ITENS.VAL_TOTAL)  desc) as rank
+from produtos
+inner join CATEGORIA
+	on(PRODUTOS.ID_CATEGORIA = CATEGORIA.ID_CATEGORIA)
+inner join VENDA_ITENS
+	on(produtos.ID_PROD = VENDA_ITENS.ID_PROD)
+inner join vendas 
+	on(VENDA_ITENS.NUM_VENDA = vendas.NUM_VENDA)
+group by 
+	produtos.ID_PROD,
+	CATEGORIA.NOME_CATEGORIA,
+	produtos.NOME_PRODUTO
+) as RankProdutosVendidos
+where rank <= 10
 /*
 EXERCÍCIO 23
 Listar os top 10 produtos mais vendidos por valor total de venda com suas respectivas categorias, calcular seu percentual de participação com relação ao total geral.
